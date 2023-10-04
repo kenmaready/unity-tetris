@@ -34,14 +34,17 @@ public class Piece : MonoBehaviour
         }
 
         this.active = true;
+        this.board.ghostBoard.Continue();
     }
 
     public void Pause() {
         active = false;
+        this.board.ghostBoard.Pause();
     }
 
     public void Continue() {
         active = true;
+        this.board.ghostBoard.Continue();
     }
 
     private void Update() {

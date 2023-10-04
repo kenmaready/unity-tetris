@@ -3,8 +3,10 @@ using UnityEngine.Tilemaps;
 
 public class Board : MonoBehaviour
 {
-    public Tilemap tilemap { get; private set; }
     public TetrominoData[] tetrominoes;
+    public Ghost ghostBoard;
+
+    public Tilemap tilemap { get; private set; }
     public Piece activePiece { get; private set; }
     public Vector3Int spawnPosition = new Vector3Int(0, 8, 0);
     [SerializeField] public ParticleSystem sparkles;

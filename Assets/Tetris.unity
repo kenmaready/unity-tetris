@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 25435158}
   - component: {fileID: 25435157}
+  - component: {fileID: 25435159}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -168,6 +169,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &25435159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25435156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3211ace3dc8456da1f0d0c626532b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostTile: {fileID: 11400000, guid: 715228c819ac146a298cde65787e2c65, type: 2}
+  trackedPiece: {fileID: 1401951267}
+  gameboard: {fileID: 1401951264}
 --- !u!1 &47405460
 GameObject:
   m_ObjectHideFlags: 0
@@ -1818,8 +1834,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0.09411765}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 0.09411765}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0.09411765}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -6988,6 +7004,7 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: fd858434bb0c148eb82265e4b29c310d, type: 2}
   - tetromino: 6
     tile: {fileID: 11400000, guid: e63622d215e704d9bbc012dca2fe1230, type: 2}
+  ghostBoard: {fileID: 25435159}
   spawnPosition: {x: 0, y: 8, z: 0}
   sparkles: {fileID: 1285550256}
   boardSize: {x: 10, y: 20}
