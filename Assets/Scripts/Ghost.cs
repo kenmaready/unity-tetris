@@ -35,7 +35,7 @@ public class Ghost : MonoBehaviour
         active = true;
     }
 
-    private void Clear() {
+    public void Clear() {
         foreach (Vector3Int cell in this.cells) {
             Vector3Int tilePosition = cell + this.position;
             this.tilemap.SetTile(tilePosition, null);

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,6 +11,7 @@ public class Board : MonoBehaviour
     public Piece activePiece { get; private set; }
     public Vector3Int spawnPosition = new Vector3Int(0, 8, 0);
     [SerializeField] public ParticleSystem sparkles;
+    private TetrominoData previewPiece;
 
     public Vector2Int boardSize = new Vector2Int(10, 20);
     public RectInt Bounds { get {
@@ -38,22 +40,49 @@ public class Board : MonoBehaviour
         for (int i = 0; i < tetrominoes.Length; i++) {
             tetrominoes[i].Initialize();
         }
+
+        RandomSelectPreviewPiece();
     }
 
     private void Start() {
         // SpawnPiece();
     }
 
-    public void SpawnPiece() {
-        int random = UnityEngine.Random.Range(0, this.tetrominoes.Length);
-        TetrominoData data = this.tetrominoes[random];
+    private void Update() {
+        DisplayPreviewPiece();
+    }
 
-        this.activePiece.Initialize(this, spawnPosition, data);
-        // this.activePiece.Pause();
+    public void RandomSelectPreviewPiece() {
+        int random = UnityEngine.Random.Range(0, this.tetrominoes.Length);
+        this.previewPiece = this.tetrominoes[random];
+        Debug.Log("Preview piece is now an " + previewPiece.tetromino + " piece.");
+    }
+
+    public void DisplayPreviewPiece() {
+        Vector3Int previewPosition = new Vector3Int(-12, 4, 0);
+
+        for (int i = 0; i < previewPiece.cells.Length; i++) {
+            Vector3Int tilePosition = (Vector3Int)previewPiece.cells[i] + previewPosition;
+            this.tilemap.SetTile(tilePosition, previewPiece.tile);
+        }
+    }
+
+    public void ClearPreviewPiece() {
+        Vector3Int previewPosition = new Vector3Int(-12, 4, 0);
+
+        for (int i = 0; i < previewPiece.cells.Length; i++) {
+            Vector3Int tilePosition = (Vector3Int)previewPiece.cells[i] + previewPosition;
+            this.tilemap.SetTile(tilePosition, null);
+        }
+    }
+
+    public void SpawnPiece() {
+        this.activePiece.Initialize(this, spawnPosition, previewPiece);
+        ClearPreviewPiece();
+        RandomSelectPreviewPiece();
 
         if (IsValidPosition(this.activePiece, this.spawnPosition)) {
             Set(activePiece);
-            // this.activePiece.Continue();
         } else {
             GameOver();
         }
@@ -126,6 +155,7 @@ public class Board : MonoBehaviour
         this.activePiece.Pause();
         gm.GameOver();
         this.tilemap.ClearAllTiles();
+        this.ghostBoard.Clear();
     }
 
     public void StartPlay() {
