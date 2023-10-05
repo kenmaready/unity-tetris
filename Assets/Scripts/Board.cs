@@ -6,6 +6,7 @@ public class Board : MonoBehaviour
 {
     public TetrominoData[] tetrominoes;
     public Ghost ghostBoard;
+    public PreviewBoard previewBoard;
 
     public Tilemap tilemap { get; private set; }
     public Piece activePiece { get; private set; }
@@ -44,42 +45,17 @@ public class Board : MonoBehaviour
         RandomSelectPreviewPiece();
     }
 
-    private void Start() {
-        // SpawnPiece();
-    }
-
-    private void Update() {
-        DisplayPreviewPiece();
-    }
-
     public void RandomSelectPreviewPiece() {
         int random = UnityEngine.Random.Range(0, this.tetrominoes.Length);
         this.previewPiece = this.tetrominoes[random];
         Debug.Log("Preview piece is now an " + previewPiece.tetromino + " piece.");
     }
 
-    public void DisplayPreviewPiece() {
-        Vector3Int previewPosition = new Vector3Int(-12, 4, 0);
-
-        for (int i = 0; i < previewPiece.cells.Length; i++) {
-            Vector3Int tilePosition = (Vector3Int)previewPiece.cells[i] + previewPosition;
-            this.tilemap.SetTile(tilePosition, previewPiece.tile);
-        }
-    }
-
-    public void ClearPreviewPiece() {
-        Vector3Int previewPosition = new Vector3Int(-12, 4, 0);
-
-        for (int i = 0; i < previewPiece.cells.Length; i++) {
-            Vector3Int tilePosition = (Vector3Int)previewPiece.cells[i] + previewPosition;
-            this.tilemap.SetTile(tilePosition, null);
-        }
-    }
-
     public void SpawnPiece() {
         this.activePiece.Initialize(this, spawnPosition, previewPiece);
-        ClearPreviewPiece();
+        previewBoard.Clear(previewPiece);
         RandomSelectPreviewPiece();
+        previewBoard.Display(previewPiece);
 
         if (IsValidPosition(this.activePiece, this.spawnPosition)) {
             Set(activePiece);
